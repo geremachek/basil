@@ -1,15 +1,5 @@
 package stack
 
-import (
-	"math"
-	"errors"
-)
+import "math"
 
-var (
-	NAN = math.NaN()
-
-	ErrTooFewArguments = errors.New("ErrTooFewArguments")
-	ErrArithmeticError = errors.New("ErrArithmeticError")
-	ErrInvalidInput    = errors.New("ErrInvalidInput")
-	ErrNoStoredValue   = errors.New("ErrNoStoredValue")
-)
+var NAN = math.NaN()

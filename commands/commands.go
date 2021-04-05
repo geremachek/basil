@@ -1,4 +1,6 @@
-package stack
+package commands
+
+import "github.com/geremachek/basil/berrs"
 
 type Command int
 
@@ -12,6 +14,9 @@ const (
 	Subtract
 	Multiply
 	Divide
+	Mod
+	Square
+	Cube
 )
 
 // create a new command
@@ -25,11 +30,14 @@ func NewCommand(s string) (Command, error) {
 		case s == "clear"  || s == "c" || s == ";": return Clear, nil
 		default: {
 			switch s {
-				case "+": return Add, nil
-				case "-": return Subtract, nil
-				case "*": return Multiply, nil
-				case "/": return Divide, nil
-				default:  return Pop, ErrInvalidInput
+				case "+":      return Add, nil
+				case "-":      return Subtract, nil
+				case "*":      return Multiply, nil
+				case "/":      return Divide, nil
+				case "%":      return Mod, nil
+				case "square": return Square, nil
+				case "cube":   return Cube, nil
+				default:       return Pop, berrs.ErrInvalidInput
 			}
 		}
 	}

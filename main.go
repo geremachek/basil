@@ -6,9 +6,9 @@ import (
 
 func main() {
 	s := stack.NewStack()
-	s.Parse("15")
 	s.Parse("5")
-	s.Parse(";")
+	s.Parse("2")
+	s.Parse("-")
 
 	s.D()
 }

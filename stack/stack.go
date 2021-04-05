@@ -3,6 +3,7 @@ package stack
 import (
 	"math"
 	"fmt"
+	"github.com/geremachek/basil/berrs"
 )
 
 // stack struct
@@ -38,14 +39,14 @@ func (s *Stack) pop() (float64, error) {
 		return last, nil
 	}
 
-	return 0.0, ErrTooFewArguments
+	return 0.0, berrs.ErrTooFewArguments
 }
 
 // swap two values
 
 func (s *Stack) swap() error {
 	if len(s.stack) < 2 {
-		return ErrTooFewArguments
+		return berrs.ErrTooFewArguments
 	}
 
 	a, _ := s.pop()
@@ -67,7 +68,7 @@ func (s *Stack) clear() {
 
 func (s *Stack) recall() error {
 	if math.IsNaN(s.memory) {
-		return ErrNoStoredValue
+		return berrs.ErrNoStoredValue
 	}
 
 	s.push(s.memory)
@@ -87,31 +88,37 @@ func (s *Stack) store() error {
 	return nil
 }
 
+func (s *Stack) operateSingle(o func(float64) float64) error {
+	if v, e := s.pop(); e == nil {
+		return s.runOperation(o(v), []float64{v})
+	} else {
+		return e
+	}
+}
+
 // operate on the stack
 
-func (s *Stack) operate(req int, o func([]float64) float64) error {
-	if len(s.stack) < req {
-		return ErrTooFewArguments // operate did nothing
+func (s *Stack) operateDouble(o func(float64, float64) float64) error {
+	if len(s.stack) < 2 {
+		return berrs.ErrTooFewArguments // operate did nothing
 	}
 
-	args := make([]float64, req)
+	a, _ := s.pop()
+	b, _ := s.pop()
 
-	for i := 0; i < req; i++ {
-		args = append(args, 0)
-		copy(args[1:], args[0:])
-		args[0], _ = s.pop()
+	return s.runOperation(o(b, a), []float64{b, a})
+}
 
-	}
-
-	if v := o(args); math.IsInf(math.Abs(v), 1)  || math.IsNaN(v) {
-		for i := 0; i < req; i++ {
+func (s *Stack) runOperation(v float64, args []float64) error {
+	if math.IsInf(math.Abs(v), 1) || math.IsNaN(v) {
+		for i := 0; i < len(args); i++ {
 			s.push(args[i])
 		}
 
-		return ErrArithmeticError
-	} else {
-		s.push(v)
+		return berrs.ErrArithmeticError
 	}
+	
+	s.push(v)
 
 	return nil
 }
