@@ -29,8 +29,16 @@ func (s *Stack) parseCommand(c cmd.Command) (err error) {
 		case cmd.Multiply: err = s.operateDouble(ari.Multiply)
 		case cmd.Divide:   err = s.operateDouble(ari.Divide)
 		case cmd.Mod:      err = s.operateDouble(math.Mod)
+		case cmd.Power:    err = s.operateDouble(math.Pow)
 		case cmd.Square:   err = s.operateSingle(ari.Square)
 		case cmd.Cube:     err = s.operateSingle(ari.Cube)
+		case cmd.Sqrt:     err = s.operateSingle(math.Sqrt)
+		case cmd.Log:      err = s.operateSingle(math.Log10)
+		case cmd.Ln:       err = s.operateSingle(math.Log)
+		case cmd.Logx:     err = s.operateDouble(ari.Logx)
+		case cmd.Sin:      err = s.operateSingle(s.sin)
+		case cmd.Cos:      err = s.operateSingle(s.cos)
+		case cmd.Tan:      err = s.operateSingle(s.tan)
 	}
 
 	return

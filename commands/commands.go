@@ -15,8 +15,19 @@ const (
 	Multiply
 	Divide
 	Mod
+	Power
 	Square
 	Cube
+	Sqrt
+	Log
+	Ln
+	Logx
+	Sin
+	Cos
+	Tan
+	Asin
+	Acos
+	Atan
 )
 
 // create a new command
@@ -35,8 +46,19 @@ func NewCommand(s string) (Command, error) {
 				case "*":      return Multiply, nil
 				case "/":      return Divide, nil
 				case "%":      return Mod, nil
+				case "^":      return Power, nil
 				case "square": return Square, nil
 				case "cube":   return Cube, nil
+				case "sqrt":   return Sqrt, nil
+				case "log":    return Log, nil
+				case "ln":     return Ln, nil
+				case "logx":   return Logx, nil
+				case "sin":    return Sin, nil
+				case "cos":    return Cos, nil
+				case "tan":    return Tan, nil
+				case "asin":   return Asin, nil
+				case "acos":   return Acos, nil
+				case "atan":   return Atan, nil
 				default:       return Pop, berrs.ErrInvalidInput
 			}
 		}

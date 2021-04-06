@@ -1,4 +1,4 @@
-package stack
+ipackage stack
 
 import (
 	"math"
@@ -10,13 +10,15 @@ import (
 
 type Stack struct {
 	stack []float64
+
 	memory float64
+	radians bool
 }
 
 // create a new stack
 
 func NewStack() Stack {
-	return Stack { []float64{}, NAN }
+	return Stack { []float64{}, NAN, false }
 }
 
 func (s *Stack) D() {
@@ -88,6 +90,8 @@ func (s *Stack) store() error {
 	return nil
 }
 
+// single element operation
+
 func (s *Stack) operateSingle(o func(float64) float64) error {
 	if v, e := s.pop(); e == nil {
 		return s.runOperation(o(v), []float64{v})
@@ -96,7 +100,7 @@ func (s *Stack) operateSingle(o func(float64) float64) error {
 	}
 }
 
-// operate on the stack
+// two element operation
 
 func (s *Stack) operateDouble(o func(float64, float64) float64) error {
 	if len(s.stack) < 2 {
@@ -108,6 +112,8 @@ func (s *Stack) operateDouble(o func(float64, float64) float64) error {
 
 	return s.runOperation(o(b, a), []float64{b, a})
 }
+
+// run and handle an operation on the stack
 
 func (s *Stack) runOperation(v float64, args []float64) error {
 	if math.IsInf(math.Abs(v), 1) || math.IsNaN(v) {
@@ -122,3 +128,19 @@ func (s *Stack) runOperation(v float64, args []float64) error {
 
 	return nil
 }
+
+func (s Stack) checkAngle(angle float64, toRad bool) {
+	if s.radians {
+		return angle // input is already in radians
+	}
+
+	c := math.Pi / 180
+
+	if toRad { c = 180 / math.Pi }
+
+	return angle * c // we need to convert it
+}
+
+func (s Stack) sin(angle float64) float64 { return math.Sin(checkAngle(angle, false)) }
+func (s Stack) cos(angle float64) float64 { return math.Cos(checkAngle(angle, false)) }
+func (s Stack) tan(angle float64) float64 { return math.Tan(checkAngle(angle, false)) }
