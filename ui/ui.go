@@ -47,13 +47,14 @@ func (u Ui) drawAngleMode() {
 func (u *Ui) matchKeys(input *tcell.EventKey) {
 	switch input.Key() {
 		case tcell.KeyCtrlLeftSq: u.running = false
+		case tcell.KeyDEL:        u.buff.Delete(u.scr)
 		case tcell.KeyRune:       u.buff.Push(u.scr, input.Rune())
 	}
 
-	s.Show()
+	u.scr.Show()
 }
 
-func (u *Ui) Start() (error) {
+func (u *Ui) Start() error {
 	if e := u.scr.Init(); e == nil {
 		drawLine(u.scr, 0, u.height)
 		
