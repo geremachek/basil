@@ -10,6 +10,7 @@ const (
 	Recall
 	Store
 	Clear
+	Angle
 	Add
 	Subtract
 	Multiply
@@ -22,6 +23,7 @@ const (
 	Log
 	Ln
 	Logx
+	Flip
 	Sin
 	Cos
 	Tan
@@ -39,6 +41,7 @@ func NewCommand(s string) (Command, error) {
 		case s == "recall" || s == "r" || s == "]": return Recall, nil
 		case s == "store"  || s == "S" || s == "[": return Store, nil
 		case s == "clear"  || s == "c" || s == ";": return Clear, nil
+		case s == "angle"  || s == "a" || s == "<": return Angle, nil
 		default: {
 			switch s {
 				case "+":      return Add, nil
@@ -53,6 +56,7 @@ func NewCommand(s string) (Command, error) {
 				case "log":    return Log, nil
 				case "ln":     return Ln, nil
 				case "logx":   return Logx, nil
+				case "flip":   return Flip, nil
 				case "sin":    return Sin, nil
 				case "cos":    return Cos, nil
 				case "tan":    return Tan, nil

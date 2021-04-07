@@ -1,8 +1,7 @@
-ipackage stack
+package stack
 
 import (
 	"math"
-	"fmt"
 	"github.com/geremachek/basil/berrs"
 )
 
@@ -12,17 +11,29 @@ type Stack struct {
 	stack []float64
 
 	memory float64
-	radians bool
+	Radians bool
 }
 
 // create a new stack
 
 func NewStack() Stack {
-	return Stack { []float64{}, NAN, false }
+	return Stack { []float64{}, NAN, true }
 }
 
-func (s *Stack) D() {
-	fmt.Println(s.stack)
+// check if the stack is empty
+
+func (s Stack) Empty() bool {
+	return len(s.stack) == 0
+}
+
+// get the size of the stack
+
+func (s Stack) Size() int {
+	return len(s.stack)
+}
+
+func (s Stack) Get(i int) float64 {
+	return s.stack[i]
 }
 
 // append some value to the stack
@@ -64,6 +75,12 @@ func (s *Stack) swap() error {
 
 func (s *Stack) clear() {
 	s.stack = []float64{}
+}
+
+// change the angle mode
+
+func (s *Stack) angle() {
+	s.Radians = !s.Radians
 }
 
 // recall the stored value
@@ -129,18 +146,22 @@ func (s *Stack) runOperation(v float64, args []float64) error {
 	return nil
 }
 
-func (s Stack) checkAngle(angle float64, toRad bool) {
-	if s.radians {
+func (s Stack) checkAngle(angle float64, toDeg bool) float64 {
+	if s.Radians {
 		return angle // input is already in radians
 	}
 
 	c := math.Pi / 180
 
-	if toRad { c = 180 / math.Pi }
+	if toDeg { c = 180 / math.Pi }
 
 	return angle * c // we need to convert it
 }
 
-func (s Stack) sin(angle float64) float64 { return math.Sin(checkAngle(angle, false)) }
-func (s Stack) cos(angle float64) float64 { return math.Cos(checkAngle(angle, false)) }
-func (s Stack) tan(angle float64) float64 { return math.Tan(checkAngle(angle, false)) }
+func (s Stack) sin(angle float64) float64 { return math.Sin(s.checkAngle(angle, false)) }
+func (s Stack) cos(angle float64) float64 { return math.Cos(s.checkAngle(angle, false)) }
+func (s Stack) tan(angle float64) float64 { return math.Tan(s.checkAngle(angle, false)) }
+
+func (s Stack) asin(v float64) float64 { return s.checkAngle(math.Asin(v), true) }
+func (s Stack) acos(v float64) float64 { return s.checkAngle(math.Acos(v), true) }
+func (s Stack) atan(v float64) float64 { return s.checkAngle(math.Atan(v), true) }

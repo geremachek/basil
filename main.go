@@ -1,14 +1,8 @@
 package main
 
-import (
-	"github.com/geremachek/basil/stack"
-)
+import "github.com/geremachek/basil/ui"
 
 func main() {
-	s := stack.NewStack()
-	s.Parse("5")
-	s.Parse("2")
-	s.Parse("-")
-
-	s.D()
+	u, _ := ui.NewUi(5)
+	u.Start()
 }

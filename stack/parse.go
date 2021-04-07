@@ -24,6 +24,7 @@ func (s *Stack) parseCommand(c cmd.Command) (err error) {
 		case cmd.Recall:   err = s.recall()
 		case cmd.Store:    err = s.store()
 		case cmd.Clear:          s.clear()
+		case cmd.Angle:          s.angle()
 		case cmd.Add:      err = s.operateDouble(ari.Add)
 		case cmd.Subtract: err = s.operateDouble(ari.Subtract)
 		case cmd.Multiply: err = s.operateDouble(ari.Multiply)
@@ -36,9 +37,13 @@ func (s *Stack) parseCommand(c cmd.Command) (err error) {
 		case cmd.Log:      err = s.operateSingle(math.Log10)
 		case cmd.Ln:       err = s.operateSingle(math.Log)
 		case cmd.Logx:     err = s.operateDouble(ari.Logx)
+		case cmd.Flip:     err = s.operateSingle(ari.Flip)
 		case cmd.Sin:      err = s.operateSingle(s.sin)
 		case cmd.Cos:      err = s.operateSingle(s.cos)
 		case cmd.Tan:      err = s.operateSingle(s.tan)
+		case cmd.Asin:     err = s.operateSingle(s.asin)
+		case cmd.Acos:     err = s.operateSingle(s.acos)
+		case cmd.Atan:     err = s.operateSingle(s.atan)
 	}
 
 	return
