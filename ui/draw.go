@@ -19,7 +19,7 @@ func addstr(s tcell.Screen, style tcell.Style, x int, y int, text string) {
 }
 
 func drawLine(s tcell.Screen, x, y int) {
-	addstr(s, tcell.StyleDefault, x, y, strings.Repeat("~", WIDTH))
+	addstr(s, tcell.StyleDefault, x, y, strings.Repeat("─", WIDTH))
 }
 
 func drawAligned(s tcell.Screen, x, y int, text string) {

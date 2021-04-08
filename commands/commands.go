@@ -23,6 +23,7 @@ const (
 	Log
 	Ln
 	Logx
+	Root
 	Flip
 	Sin
 	Cos
@@ -54,6 +55,7 @@ func NewCommand(s string) (Command, error) {
 		case "log":              return Log, nil
 		case "ln":               return Ln, nil
 		case "logx":             return Logx, nil
+		case "root":             return Root, nil
 		case "flip":             return Flip, nil
 		case "sin":              return Sin, nil
 		case "cos":              return Cos, nil

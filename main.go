@@ -1,8 +1,21 @@
 package main
 
-import "github.com/geremachek/basil/ui"
+import (
+	"os"
+	"fmt"
+	"github.com/spf13/pflag"
+	"github.com/geremachek/basil/ui"
+)
 
 func main() {
-	u, _ := ui.NewUi(5)
-	u.Start()
+	var height int
+
+	pflag.IntVarP(&height, "height", "H", 10, "set how many elements are displayed at once")
+	pflag.Parse()
+
+	if u, e := ui.NewUi(height); e == nil {
+		u.Start()
+	} else {
+		fmt.Fprintf(os.Stderr, "basil: can't start interface\n%s\n", e)
+	}
 }

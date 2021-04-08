@@ -16,6 +16,10 @@ func NewLineBuff(x, y int) LineBuff {
 	return LineBuff { "", x, y }
 }
 
+func (lb LineBuff) Buffer() string {
+	return lb.buffer
+}
+
 func (lb LineBuff) showPos(s tcell.Screen) {
 	s.ShowCursor(lb.locX, lb.locY)
 }
@@ -38,14 +42,11 @@ func (lb *LineBuff) Delete(s tcell.Screen) {
 	}
 }
 
-func (lb *LineBuff) Refresh(s tcell.Screen) (toParse string) {
+func (lb *LineBuff) Refresh(s tcell.Screen) {
+	addstr(s, tcell.StyleDefault, 0, lb.locY, strings.Repeat(" ", len(lb.buffer)))
+
 	lb.locX = 0
-
-	lb.showPos(s)
-	addstr(s, tcell.StyleDefault, 0, lb.locY, strings.Repeat(" ", len(lb.buffer))
-
-	toParse = lb.buffer
 	lb.buffer = ""
-
-	return
+	
+	lb.showPos(s)
 }

@@ -37,6 +37,7 @@ func (s *Stack) parseCommand(c cmd.Command) (err error) {
 		case cmd.Log:      err = s.operateSingle(math.Log10)
 		case cmd.Ln:       err = s.operateSingle(math.Log)
 		case cmd.Logx:     err = s.operateDouble(ari.Logx)
+		case cmd.Root:     err = s.operateDouble(ari.Root)
 		case cmd.Flip:     err = s.operateSingle(ari.Flip)
 		case cmd.Sin:      err = s.operateSingle(s.sin)
 		case cmd.Cos:      err = s.operateSingle(s.cos)
@@ -53,7 +54,7 @@ func (s *Stack) Parse(input string) error {
 	if v, e := parseValue(input); e == nil {
 		s.push(v)
 	} else if c, e := cmd.NewCommand(input); e == nil {
-		s.parseCommand(c)
+		return s.parseCommand(c)
 	} else {
 		return e
 	}
