@@ -13,9 +13,13 @@ func main() {
 	pflag.IntVarP(&height, "height", "H", 5, "set how many elements are displayed at once")
 	pflag.Parse()
 
+	message := "basil: can't start interface\n%s\n"
+
 	if u, e := ui.NewUi(height); e == nil {
-		u.Start()
+		if err := u.Start(); err != nil {
+			fmt.Fprintf(os.Stderr, message, e)
+		}
 	} else {
-		fmt.Fprintf(os.Stderr, "basil: can't start interface\n%s\n", e)
+		fmt.Fprintf(os.Stderr, message, e)
 	}
 }
