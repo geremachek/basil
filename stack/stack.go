@@ -133,6 +133,8 @@ func (s *Stack) operateDouble(o func(float64, float64) float64) error {
 // run and handle an operation on the stack
 
 func (s *Stack) runOperation(v float64, args []float64) error {
+	// if the operation failed, re-add the lost values
+
 	if math.IsInf(math.Abs(v), 1) || math.IsNaN(v) {
 		for i := 0; i < len(args); i++ {
 			s.push(args[i])
@@ -145,6 +147,8 @@ func (s *Stack) runOperation(v float64, args []float64) error {
 
 	return nil
 }
+
+// deal with angle types...
 
 func (s Stack) checkAngle(angle float64, toDeg bool) float64 {
 	if s.Radians {

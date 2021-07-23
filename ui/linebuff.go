@@ -16,13 +16,19 @@ func NewLineBuff(x, y int) LineBuff {
 	return LineBuff { "", x, y }
 }
 
+// get our buffer
+
 func (lb LineBuff) Buffer() string {
 	return lb.buffer
 }
 
+// show our cursor
+
 func (lb LineBuff) showPos(s tcell.Screen) {
 	s.ShowCursor(lb.locX, lb.locY)
 }
+
+// add a char...
 
 func (lb *LineBuff) Push(s tcell.Screen, ch rune) {
 	lb.buffer += string(ch)
@@ -31,6 +37,8 @@ func (lb *LineBuff) Push(s tcell.Screen, ch rune) {
 	lb.locX++
 	lb.showPos(s)
 }
+
+// delete our char
 
 func (lb *LineBuff) Delete(s tcell.Screen) {
 	if l := len(lb.buffer); l > 0 {
@@ -41,6 +49,8 @@ func (lb *LineBuff) Delete(s tcell.Screen) {
 		lb.showPos(s)
 	}
 }
+
+// reset the line
 
 func (lb *LineBuff) Refresh(s tcell.Screen) {
 	addstr(s, tcell.StyleDefault, 0, lb.locY, strings.Repeat(" ", len(lb.buffer)))

@@ -8,6 +8,8 @@ import (
 	ari "github.com/geremachek/basil/arithmetic"
 )
 
+// parse variables...
+
 func parseValue(v string) (float64, error) {
 	switch strings.ToLower(v) {
 		case "e":   return math.E, nil
@@ -16,6 +18,8 @@ func parseValue(v string) (float64, error) {
 		default:    return strconv.ParseFloat(v, 64)
 	}
 }
+
+// parse commands...
 
 func (s *Stack) parseCommand(c cmd.Command) (err error) {
 	switch c {
@@ -49,6 +53,8 @@ func (s *Stack) parseCommand(c cmd.Command) (err error) {
 
 	return
 }
+
+// value... command... error? Deal with them all!
 
 func (s *Stack) Parse(input string) error {
 	if v, e := parseValue(input); e == nil {

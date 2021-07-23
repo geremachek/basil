@@ -24,6 +24,8 @@ func NewUi(h int) (Ui, error) {
 	}
 }
 
+// draw the window showing the stack
+
 func (u *Ui) drawStackWindow() {
 	if !u.stack.Empty() {
 		y := u.height-1
@@ -35,6 +37,8 @@ func (u *Ui) drawStackWindow() {
 	}
 }
 
+// clear the stack window
+
 func (u *Ui) clearStackWindow(lines int) {
 	spaces := strings.Repeat(" ", WIDTH)
 
@@ -42,6 +46,8 @@ func (u *Ui) clearStackWindow(lines int) {
 		addstr(u.scr, tcell.StyleDefault, 0, y, spaces)
 	}
 }
+
+// draw the angle decoration
 
 func (u Ui) drawAngleMode() {
 	m := 'D'
@@ -52,6 +58,8 @@ func (u Ui) drawAngleMode() {
 
 	u.scr.SetContent(WIDTH+1, u.height, m, []rune(""), tcell.StyleDefault)
 }
+
+// match keys with actions
 
 func (u *Ui) matchKeys(input *tcell.EventKey) {
 	switch input.Key() {
@@ -64,6 +72,8 @@ func (u *Ui) matchKeys(input *tcell.EventKey) {
 	u.scr.Show()
 }
 
+// pars a line of input, redrawing the screen
+
 func (u *Ui) parseLine() {
 	before := u.stack.Size()
 
@@ -75,6 +85,8 @@ func (u *Ui) parseLine() {
 		u.buff.Refresh(u.scr)
 	}
 }
+
+// draw the screen and listen for input
 
 func (u *Ui) Start() error {
 	if e := u.scr.Init(); e == nil {
