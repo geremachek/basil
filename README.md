@@ -33,6 +33,7 @@ tan
 asin
 acos
 atan
+fact
 ```
 
 **Key bindings:**

@@ -31,6 +31,7 @@ const (
 	Asin
 	Acos
 	Atan
+	Fact
 )
 
 // create a new command
@@ -63,6 +64,7 @@ func NewCommand(s string) (Command, error) {
 		case "asin":             return Asin, nil
 		case "acos":             return Acos, nil
 		case "atan":             return Atan, nil
+		case "fact",   "!":      return Fact, nil
 		default:                 return Pop, berrs.ErrInvalidInput
 	}
 } 

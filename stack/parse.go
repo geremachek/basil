@@ -49,6 +49,7 @@ func (s *Stack) parseCommand(c cmd.Command) (err error) {
 		case cmd.Asin:     err = s.operateSingle(s.asin)
 		case cmd.Acos:     err = s.operateSingle(s.acos)
 		case cmd.Atan:     err = s.operateSingle(s.atan)
+		case cmd.Fact:     err = s.operateSingle(ari.FactW)
 	}
 
 	return
