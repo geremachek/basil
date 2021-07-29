@@ -1,8 +1,8 @@
-<h1 align="center">basil</h1>
+# basil
 
-<p align="center">An RPN calculator with a simple terminal interface</p>
+An RPN calculator with a simple terminal interface
 
-<p align="center"><img src="tiny.png"></p>
+<img src="tiny.png"></img>
 
 **Commands:**
 
