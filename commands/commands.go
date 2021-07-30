@@ -5,7 +5,8 @@ import "github.com/geremachek/basil/berrs"
 type Command int
 
 const (
-	Pop Command = iota
+	Unknown Command = iota
+	Pop
 	Swap
 	Recall
 	Store
@@ -65,6 +66,6 @@ func NewCommand(s string) (Command, error) {
 		case "acos":             return Acos, nil
 		case "atan":             return Atan, nil
 		case "fact",   "!":      return Fact, nil
-		default:                 return Pop, berrs.ErrInvalidInput
+		default:                 return Unknown, berrs.ErrInvalidInput
 	}
 } 
