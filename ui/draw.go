@@ -7,7 +7,7 @@ import (
 	"github.com/gdamore/tcell"
 )
 
-const width = 60
+const width = 20
 
 // draw text to the screen
 
