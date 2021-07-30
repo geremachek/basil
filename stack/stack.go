@@ -17,7 +17,7 @@ type Stack struct {
 // create a new stack
 
 func NewStack() Stack {
-	return Stack { []float64{}, NaN, true }
+	return Stack { []float64{}, math.NaN(), true }
 }
 
 // check if the stack is empty

@@ -2,13 +2,15 @@ package arithmetic
 
 import "math"
 
+var NaN = math.NaN()
+
 func Add      (a, b float64) float64 { return a + b }
 func Subtract (a, b float64) float64 { return a - b }
 func Multiply (a, b float64) float64 { return a * b }
 
 func Divide   (a, b float64) float64 {
 	if (b == 0) {
-		return math.NaN()
+		return NaN
 	}
 
 	return a / b
@@ -20,12 +22,20 @@ func Logx     (a, b float64) float64 { return math.Log10(b) / math.Log10(a) }
 func Root     (a, b float64) float64 { return math.Pow(b, 1 / a) }
 func Flip     (v float64) float64    { return -v }
 
-func FactW    (v float64) float64    { return float64(Fact(int(math.Trunc(v)))) }
+func FactW    (v float64) float64 {
+	// no bignum for now
 
-func Fact     (v int) int {
-	if v == 0 || v == 1 {
-		return v
+	if v < 66 {
+		return float64(fact(uint64(v)))
 	}
 
-	return v * Fact(v-1)
+	return NaN
+}
+
+func fact     (v uint64) uint64 {
+	if v == 0 || v == 1 {
+		return 1
+	}
+
+	return v * fact(v-1)
 }
