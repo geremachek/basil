@@ -25,7 +25,7 @@ func Flip     (v float64) float64    { return -v }
 func FactW    (v float64) float64 {
 	// no bignum for now
 
-	if v < 66 {
+	if v < 21 {
 		return float64(fact(uint64(v)))
 	}
 
