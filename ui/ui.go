@@ -7,9 +7,11 @@ import (
 	"github.com/geremachek/basil/stack"
 )
 
+var clearLine = strings.Repeat(" ", width)
+
 type Ui struct {
 	stack stack.Stack
-	buff LineBuff
+	buff lineBuff
 
 	scr tcell.Screen
 	height int
@@ -18,7 +20,7 @@ type Ui struct {
 
 func NewUi(h int) (Ui, error) {
 	if s, err := tcell.NewScreen(); err == nil {
-		return Ui { stack.NewStack(), NewLineBuff(0, h+2), s, h, true }, nil
+		return Ui { stack.NewStack(), newLineBuff(0, h+2), s, h, true }, nil
 	} else {
 		return Ui{}, err
 	}
@@ -40,10 +42,8 @@ func (u *Ui) drawStackWindow() {
 // clear the stack window
 
 func (u *Ui) clearStackWindow(lines int) {
-	spaces := strings.Repeat(" ", WIDTH)
-
 	for y := u.height-1; y >= u.height-lines; y-- {
-		addstr(u.scr, tcell.StyleDefault, 0, y, spaces)
+		addstr(u.scr, tcell.StyleDefault, 0, y, clearLine)
 	}
 }
 
@@ -56,7 +56,7 @@ func (u Ui) drawAngleMode() {
 		m = 'R'
 	}
 
-	u.scr.SetContent(WIDTH+1, u.height, m, []rune(""), tcell.StyleDefault)
+	u.scr.SetContent(width+1, u.height, m, []rune(""), tcell.StyleDefault)
 }
 
 // match keys with actions
@@ -65,8 +65,8 @@ func (u *Ui) matchKeys(input *tcell.EventKey) {
 	switch input.Key() {
 		case tcell.KeyCtrlLeftSq:              u.running = false
 		case tcell.KeyEnter:                   u.parseLine()
-		case tcell.KeyDEL, tcell.KeyBackspace: u.buff.Delete(u.scr)
-		case tcell.KeyRune:                    u.buff.Push(u.scr, input.Rune())
+		case tcell.KeyDEL, tcell.KeyBackspace: u.buff.delete(u.scr)
+		case tcell.KeyRune:                    u.buff.push(u.scr, input.Rune())
 	}
 
 	u.scr.Show()
@@ -77,12 +77,12 @@ func (u *Ui) matchKeys(input *tcell.EventKey) {
 func (u *Ui) parseLine() {
 	before := u.stack.Size()
 
-	if e := u.stack.Parse(u.buff.Buffer()); e == nil {
+	if e := u.stack.Parse(u.buff.text()); e == nil {
 		u.clearStackWindow(before)
 		u.drawStackWindow()
 		u.drawAngleMode()
 
-		u.buff.Refresh(u.scr)
+		u.buff.refresh(u.scr)
 	}
 }
 

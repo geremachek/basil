@@ -5,32 +5,31 @@ import (
 	"github.com/gdamore/tcell"
 )
 
-type LineBuff struct {
+type lineBuff struct {
 	buffer string
 	
 	locX int
 	locY int
 }
 
-func NewLineBuff(x, y int) LineBuff {
-	return LineBuff { "", x, y }
+func newLineBuff(x, y int) lineBuff {
+	return lineBuff { "", x, y }
 }
 
-// get our buffer
 
-func (lb LineBuff) Buffer() string {
+func (lb lineBuff) text() string {
 	return lb.buffer
 }
 
 // show our cursor
 
-func (lb LineBuff) showPos(s tcell.Screen) {
+func (lb lineBuff) showPos(s tcell.Screen) {
 	s.ShowCursor(lb.locX, lb.locY)
 }
 
 // add a char...
 
-func (lb *LineBuff) Push(s tcell.Screen, ch rune) {
+func (lb *lineBuff) push(s tcell.Screen, ch rune) {
 	lb.buffer += string(ch)
 	s.SetContent(lb.locX, lb.locY, ch, []rune(""), tcell.StyleDefault)
 
@@ -40,7 +39,7 @@ func (lb *LineBuff) Push(s tcell.Screen, ch rune) {
 
 // delete our char
 
-func (lb *LineBuff) Delete(s tcell.Screen) {
+func (lb *lineBuff) delete(s tcell.Screen) {
 	if l := len(lb.buffer); l > 0 {
 		lb.buffer = lb.buffer[:l-1]
 		lb.locX--
@@ -52,7 +51,7 @@ func (lb *LineBuff) Delete(s tcell.Screen) {
 
 // reset the line
 
-func (lb *LineBuff) Refresh(s tcell.Screen) {
+func (lb *lineBuff) refresh(s tcell.Screen) {
 	addstr(s, tcell.StyleDefault, 0, lb.locY, strings.Repeat(" ", len(lb.buffer)))
 
 	lb.locX = 0

@@ -2,4 +2,4 @@ package stack
 
 import "math"
 
-var NAN = math.NaN()
+var NaN = math.NaN()
