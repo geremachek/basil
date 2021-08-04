@@ -62,11 +62,14 @@ func (s *Stack) swap() error {
 		return berrs.ErrTooFewArguments
 	}
 
-	a, _ := s.pop()
-	b, _ := s.pop()
+	// switch values
 
-	s.push(a)
-	s.push(b)
+	var (
+		l = len(s.stack)-1
+		sl = l - 1
+	)
+	
+	s.stack[l], s.stack[sl] = s.stack[sl], s.stack[l]
 
 	return nil
 }
@@ -123,6 +126,8 @@ func (s *Stack) operateDouble(o func(float64, float64) float64) error {
 	if len(s.stack) < 2 {
 		return berrs.ErrTooFewArguments // operate did nothing
 	}
+
+	// pop off nums for the operation
 
 	a, _ := s.pop()
 	b, _ := s.pop()

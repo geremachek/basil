@@ -15,7 +15,7 @@ func parseValue(v string) (float64, error) {
 		case "e":   return math.E, nil
 		case "pi":  return math.Pi, nil
 		case "phi": return math.Phi, nil
-		default:    return strconv.ParseFloat(v, 64)
+		default:    return strconv.ParseFloat(v, 64) // should be a normal value, if not, an error!
 	}
 }
 

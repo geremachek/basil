@@ -2,6 +2,8 @@ package arithmetic
 
 import "math"
 
+// Invalid number
+
 var NaN = math.NaN()
 
 func Add      (a, b float64) float64 { return a + b }
@@ -9,6 +11,8 @@ func Subtract (a, b float64) float64 { return a - b }
 func Multiply (a, b float64) float64 { return a * b }
 
 func Divide   (a, b float64) float64 {
+	// handle division by zero!
+
 	if (b == 0) {
 		return NaN
 	}
@@ -33,7 +37,7 @@ func FactW    (v float64) float64 {
 }
 
 func fact     (v uint64) uint64 {
-	if v == 0 || v == 1 {
+	if v == 0 || v == 1 { // base case
 		return 1
 	}
 

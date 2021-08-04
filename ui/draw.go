@@ -9,6 +9,11 @@ import (
 
 const width = 20
 
+var (
+	strw = strconv.Itoa(width)
+	bar = strings.Repeat("─", width) // barrier decoration string
+)
+
 // draw text to the screen
 
 func addstr(s tcell.Screen, style tcell.Style, x int, y int, text string) {
@@ -22,7 +27,7 @@ func addstr(s tcell.Screen, style tcell.Style, x int, y int, text string) {
 // draw the barrier decoration...
 
 func drawLine(s tcell.Screen, x, y int) {
-	addstr(s, tcell.StyleDefault, x, y, strings.Repeat("─", width))
+	addstr(s, tcell.StyleDefault, x, y, bar)
 }
 
 // allign and trim our text
@@ -30,9 +35,11 @@ func drawLine(s tcell.Screen, x, y int) {
 func drawAligned(s tcell.Screen, x, y int, text string) {
 	disp := text
 
+	// if there isn't enough room, add "..."
+
 	if l := len(disp); l > width {
 		disp = disp[:l - (l - width) - 3] + "..."
 	}
 
-	addstr(s, tcell.StyleDefault, x, y, fmt.Sprintf("%" + strconv.Itoa(width) + "s", disp))
+	addstr(s, tcell.StyleDefault, x, y, fmt.Sprintf("%" + strw + "s", disp))
 }

@@ -75,9 +75,9 @@ func (u *Ui) matchKeys(input *tcell.EventKey) {
 // pars a line of input, redrawing the screen
 
 func (u *Ui) parseLine() {
-	before := u.stack.Size()
+	before := u.stack.Size() // old stack size
 
-	if e := u.stack.Parse(u.buff.text()); e == nil {
+	if e := u.stack.Parse(u.buff.text()); e == nil { // redraw if parsing is successful
 		u.clearStackWindow(before)
 		u.drawStackWindow()
 		u.drawAngleMode()
@@ -90,11 +90,15 @@ func (u *Ui) parseLine() {
 
 func (u *Ui) Start() error {
 	if e := u.scr.Init(); e == nil {
+		// draw to the screen
+		
 		drawLine(u.scr, 0, u.height)
 		u.drawAngleMode()
 		
 		u.scr.ShowCursor(0, u.height + 2)
 		u.scr.Show()
+
+		// handle input
 
 		var input tcell.Event
 
