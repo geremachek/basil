@@ -9,7 +9,7 @@ import (
 
 var clearLine = strings.Repeat(" ", width)
 
-type Ui struct {
+type ui struct {
 	stack stack.Stack
 	buff lineBuff
 
@@ -18,17 +18,17 @@ type Ui struct {
 	running bool
 }
 
-func NewUi(h int) (Ui, error) {
+func NewUi(h int) (ui, error) {
 	if s, err := tcell.NewScreen(); err == nil {
-		return Ui { stack.NewStack(), newLineBuff(0, h+2), s, h, true }, nil
+		return ui { stack.NewStack(), newLineBuff(0, h+2), s, h, true }, nil
 	} else {
-		return Ui{}, err
+		return ui{}, err
 	}
 }
 
 // draw the window showing the stack
 
-func (u *Ui) drawStackWindow() {
+func (u *ui) drawStackWindow() {
 	if !u.stack.Empty() {
 		y := u.height-1
 
@@ -41,7 +41,7 @@ func (u *Ui) drawStackWindow() {
 
 // clear the stack window
 
-func (u *Ui) clearStackWindow(lines int) {
+func (u *ui) clearStackWindow(lines int) {
 	for y := u.height-1; y >= u.height-lines; y-- {
 		addstr(u.scr, tcell.StyleDefault, 0, y, clearLine)
 	}
@@ -49,7 +49,7 @@ func (u *Ui) clearStackWindow(lines int) {
 
 // draw the angle decoration
 
-func (u Ui) drawAngleMode() {
+func (u ui) drawAngleMode() {
 	m := 'D'
 
 	if u.stack.Radians {
@@ -61,7 +61,7 @@ func (u Ui) drawAngleMode() {
 
 // match keys with actions
 
-func (u *Ui) matchKeys(input *tcell.EventKey) {
+func (u *ui) matchKeys(input *tcell.EventKey) {
 	switch input.Key() {
 		case tcell.KeyCtrlLeftSq:              u.running = false
 		case tcell.KeyEnter:                   u.parseLine()
@@ -74,7 +74,7 @@ func (u *Ui) matchKeys(input *tcell.EventKey) {
 
 // pars a line of input, redrawing the screen
 
-func (u *Ui) parseLine() {
+func (u *ui) parseLine() {
 	before := u.stack.Size() // old stack size
 
 	if e := u.stack.Parse(u.buff.text()); e == nil { // redraw if parsing is successful
@@ -88,7 +88,7 @@ func (u *Ui) parseLine() {
 
 // draw the screen and listen for input
 
-func (u *Ui) Start() error {
+func (u *ui) Start() error {
 	if e := u.scr.Init(); e == nil {
 		// draw to the screen
 		
