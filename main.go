@@ -10,7 +10,7 @@ import (
 func main() {
 	var height int
 
-	pflag.IntVarP(&height, "height", "H", 5, "set how many elements are displayed at once")
+	pflag.IntVarP(&height, "height", "H", 10, "set how many elements are displayed at once")
 	pflag.Parse()
 
 	message := "basil: can't start interface\n%s\n"

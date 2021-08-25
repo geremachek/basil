@@ -7,7 +7,7 @@ import (
 	"github.com/gdamore/tcell"
 )
 
-const width = 20
+const width = 30
 
 var (
 	strw = strconv.Itoa(width)
