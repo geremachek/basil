@@ -69,7 +69,9 @@ func (u *ui) matchKeys(input *tcell.EventKey) {
 		case tcell.KeyRune:                    u.buff.push(u.scr, input.Rune())
 	}
 
-	u.scr.Show()
+	if u.running {
+		u.scr.Show()
+	}
 }
 
 // pars a line of input, redrawing the screen
