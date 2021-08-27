@@ -18,6 +18,8 @@ type ui struct {
 	running bool
 }
 
+// create a new ui struct
+
 func NewUi(h int) (ui, error) {
 	if s, err := tcell.NewScreen(); err == nil {
 		return ui { stack.NewStack(), newLineBuff(0, h+2), s, h, true }, nil
@@ -52,6 +54,8 @@ func (u *ui) clearStackWindow(lines int) {
 func (u ui) drawAngleMode() {
 	m := 'D'
 
+	// R is displayed when in radian mode
+
 	if u.stack.Radians {
 		m = 'R'
 	}
@@ -68,6 +72,8 @@ func (u *ui) matchKeys(input *tcell.EventKey) {
 		case tcell.KeyDEL, tcell.KeyBackspace: u.buff.delete(u.scr)
 		case tcell.KeyRune:                    u.buff.push(u.scr, input.Rune())
 	}
+
+	// only refresh the screen if the interface is still "running"
 
 	if u.running {
 		u.scr.Show()
