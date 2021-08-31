@@ -41,3 +41,5 @@ fact
 ```
 ESC: Exit
 ```
+
+Built using Go version 1.16+
