@@ -16,8 +16,8 @@ type Stack struct {
 
 // create a new stack
 
-func NewStack() Stack {
-	return Stack { []float64{}, math.NaN(), true }
+func NewStack() *Stack {
+	return &Stack { nil, math.NaN(), true }
 }
 
 // check if the stack is empty
@@ -77,7 +77,7 @@ func (s *Stack) swap() error {
 // clear the stack
 
 func (s *Stack) clear() {
-	s.stack = []float64{}
+	s.stack = nil
 }
 
 // change the angle mode

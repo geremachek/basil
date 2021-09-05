@@ -10,7 +10,7 @@ import (
 var clearLine = strings.Repeat(" ", width)
 
 type ui struct {
-	stack stack.Stack
+	stack *stack.Stack
 	buff lineBuff
 
 	scr tcell.Screen
@@ -20,11 +20,11 @@ type ui struct {
 
 // create a new ui struct
 
-func NewUi(h int) (ui, error) {
+func NewUi(h int) (*ui, error) {
 	if s, err := tcell.NewScreen(); err == nil {
-		return ui { stack.NewStack(), newLineBuff(0, h+2), s, h, true }, nil
+		return &ui { stack.NewStack(), newLineBuff(0, h+2), s, h, true }, nil
 	} else {
-		return ui{}, err
+		return &ui{}, err
 	}
 }
 
