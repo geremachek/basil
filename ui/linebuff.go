@@ -12,8 +12,8 @@ type lineBuff struct {
 	locY int
 }
 
-func newLineBuff(x, y int) lineBuff {
-	return lineBuff { "", x, y }
+func newLineBuff(x, y int) *lineBuff {
+	return &lineBuff { "", x, y }
 }
 
 

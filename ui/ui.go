@@ -11,7 +11,7 @@ var clearLine = strings.Repeat(" ", width)
 
 type ui struct {
 	stack *stack.Stack
-	buff lineBuff
+	buff *lineBuff
 
 	scr tcell.Screen
 	height int
