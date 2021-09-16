@@ -67,7 +67,7 @@ func (u ui) drawAngleMode() {
 
 func (u *ui) matchKeys(input *tcell.EventKey) {
 	switch input.Key() {
-		case tcell.KeyCtrlLeftSq:              u.running = false
+		case tcell.KeyESC:                     u.running = false
 		case tcell.KeyEnter:                   u.parseLine()
 		case tcell.KeyDEL, tcell.KeyBackspace: u.buff.delete(u.scr)
 		case tcell.KeyRune:                    u.buff.push(u.scr, input.Rune())
