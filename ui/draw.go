@@ -2,16 +2,8 @@ package ui
 
 import (
 	"fmt"
-	"strings"
 	"strconv"
 	"github.com/gdamore/tcell"
-)
-
-const width = 30
-
-var (
-	strw = strconv.Itoa(width)
-	bar = strings.Repeat("─", width) // barrier decoration string
 )
 
 // draw text to the screen
@@ -24,15 +16,9 @@ func addstr(s tcell.Screen, style tcell.Style, x int, y int, text string) {
 	}
 }
 
-// draw the barrier decoration...
-
-func drawLine(s tcell.Screen, x, y int) {
-	addstr(s, tcell.StyleDefault, x, y, bar)
-}
-
 // allign and trim our text
 
-func drawAligned(s tcell.Screen, x, y int, text string) {
+func drawAligned(s tcell.Screen, x, y, width int, text string) {
 	disp := text
 
 	// if there isn't enough room, add "..."
@@ -41,5 +27,5 @@ func drawAligned(s tcell.Screen, x, y int, text string) {
 		disp = disp[:l - (l - width) - 3] + "..."
 	}
 
-	addstr(s, tcell.StyleDefault, x, y, fmt.Sprintf("%" + strw + "s", disp))
+	addstr(s, tcell.StyleDefault, x, y, fmt.Sprintf("%" + strconv.Itoa(width) + "s", disp))
 }

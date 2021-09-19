@@ -7,22 +7,25 @@ import (
 	"github.com/geremachek/basil/stack"
 )
 
-var clearLine = strings.Repeat(" ", width)
-
 type ui struct {
 	stack *stack.Stack
 	buff *lineBuff
 
 	scr tcell.Screen
+	
 	height int
+	width int
+
+	clearLine string
+
 	running bool
 }
 
 // create a new ui struct
 
-func NewUi(h int) (*ui, error) {
+func NewUi(h, w int) (*ui, error) {
 	if s, err := tcell.NewScreen(); err == nil {
-		return &ui { stack.NewStack(), newLineBuff(0, h+2), s, h, true }, nil
+		return &ui { stack.NewStack(), newLineBuff(0, h+2), s, h, w, strings.Repeat(" ", w), true }, nil
 	} else {
 		return &ui{}, err
 	}
@@ -35,7 +38,7 @@ func (u *ui) drawStackWindow() {
 		y := u.height-1
 
 		for i := u.stack.Size()-1; i >= 0 && y >= 0; i-- {
-			drawAligned(u.scr, 0, y, strconv.FormatFloat(u.stack.Get(i), 'f', -1, 64))
+			drawAligned(u.scr, 0, y, u.width, strconv.FormatFloat(u.stack.Get(i), 'f', -1, 64))
 			y--
 		}
 	}
@@ -45,7 +48,7 @@ func (u *ui) drawStackWindow() {
 
 func (u *ui) clearStackWindow(lines int) {
 	for y := u.height-1; y >= u.height-lines; y-- {
-		addstr(u.scr, tcell.StyleDefault, 0, y, clearLine)
+		addstr(u.scr, tcell.StyleDefault, 0, y, u.clearLine)
 	}
 }
 
@@ -60,7 +63,13 @@ func (u ui) drawAngleMode() {
 		m = 'R'
 	}
 
-	u.scr.SetContent(width+1, u.height, m, []rune(""), tcell.StyleDefault)
+	u.scr.SetContent(u.width+1, u.height, m, []rune(""), tcell.StyleDefault)
+}
+
+// draw the barrier decoration...
+
+func (u ui) drawLine() {
+	addstr(u.scr, tcell.StyleDefault, 0, u.height, strings.Repeat("─", u.width))
 }
 
 // match keys with actions
@@ -100,7 +109,7 @@ func (u *ui) Start() error {
 	if e := u.scr.Init(); e == nil {
 		// draw to the screen
 		
-		drawLine(u.scr, 0, u.height)
+		u.drawLine()
 		u.drawAngleMode()
 		
 		u.scr.ShowCursor(0, u.height + 2)
