@@ -58,9 +58,11 @@ func (s *Stack) parseCommand(c cmd.Command) (err error) {
 // value... command... error? Deal with them all!
 
 func (s *Stack) Parse(input string) error {
-	if v, e := parseValue(input); e == nil {
+	trimmed := strings.Trim(input, " ")
+
+	if v, e := parseValue(trimmed); e == nil {
 		s.push(v)
-	} else if c, e := cmd.NewCommand(input); e == nil {
+	} else if c, e := cmd.NewCommand(trimmed); e == nil {
 		return s.parseCommand(c)
 	} else {
 		return e
