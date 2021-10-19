@@ -96,13 +96,13 @@ func (u *ui) matchKeys(input *tcell.EventKey) {
 func (u *ui) parseLine() {
 	before := u.stack.Size() // old stack size
 
-	if e := u.stack.Parse(u.buff.text()); e == nil { // redraw if parsing is successful
-		u.clearStackWindow(before)
-		u.drawStackWindow()
-		u.drawAngleMode()
+	u.stack.Parse(u.buff.text())
+	
+	u.clearStackWindow(before)
+	u.drawStackWindow()
+	u.drawAngleMode()
 
-		u.buff.refresh(u.scr)
-	}
+	u.buff.refresh(u.scr)
 }
 
 // draw the screen and listen for input

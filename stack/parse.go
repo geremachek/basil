@@ -23,33 +23,33 @@ func parseValue(v string) (float64, error) {
 
 func (s *Stack) parseCommand(c cmd.Command) (err error) {
 	switch c {
-		case cmd.Pop:      _, err = s.pop()
-		case cmd.Swap:     err = s.swap()
-		case cmd.Recall:   err = s.recall()
-		case cmd.Store:    err = s.store()
-		case cmd.Clear:          s.clear()
-		case cmd.Angle:          s.angle()
-		case cmd.Add:      err = s.operateDouble(ari.Add)
-		case cmd.Subtract: err = s.operateDouble(ari.Subtract)
-		case cmd.Multiply: err = s.operateDouble(ari.Multiply)
-		case cmd.Divide:   err = s.operateDouble(ari.Divide)
-		case cmd.Mod:      err = s.operateDouble(math.Mod)
-		case cmd.Power:    err = s.operateDouble(math.Pow)
-		case cmd.Square:   err = s.operateSingle(ari.Square)
-		case cmd.Cube:     err = s.operateSingle(ari.Cube)
-		case cmd.Sqrt:     err = s.operateSingle(math.Sqrt)
-		case cmd.Log:      err = s.operateSingle(math.Log10)
-		case cmd.Ln:       err = s.operateSingle(math.Log)
-		case cmd.Logx:     err = s.operateDouble(ari.Logx)
-		case cmd.Root:     err = s.operateDouble(ari.Root)
-		case cmd.Flip:     err = s.operateSingle(ari.Flip)
-		case cmd.Sin:      err = s.operateSingle(s.sin)
-		case cmd.Cos:      err = s.operateSingle(s.cos)
-		case cmd.Tan:      err = s.operateSingle(s.tan)
-		case cmd.Asin:     err = s.operateSingle(s.asin)
-		case cmd.Acos:     err = s.operateSingle(s.acos)
-		case cmd.Atan:     err = s.operateSingle(s.atan)
-		case cmd.Fact:     err = s.operateSingle(ari.FactW)
+		case cmd.Pop:      s.pop()
+		case cmd.Swap:     s.swap()
+		case cmd.Recall:   s.recall()
+		case cmd.Store:    s.store()
+		case cmd.Clear:    s.clear()
+		case cmd.Angle:    s.angle()
+		case cmd.Add:      s.operateDouble(ari.Add)
+		case cmd.Subtract: s.operateDouble(ari.Subtract)
+		case cmd.Multiply: s.operateDouble(ari.Multiply)
+		case cmd.Divide:   s.operateDouble(ari.Divide)
+		case cmd.Mod:      s.operateDouble(math.Mod)
+		case cmd.Power:    s.operateDouble(math.Pow)
+		case cmd.Square:   s.operateSingle(ari.Square)
+		case cmd.Cube:     s.operateSingle(ari.Cube)
+		case cmd.Sqrt:     s.operateSingle(math.Sqrt)
+		case cmd.Log:      s.operateSingle(math.Log10)
+		case cmd.Ln:       s.operateSingle(math.Log)
+		case cmd.Logx:     s.operateDouble(ari.Logx)
+		case cmd.Root:     s.operateDouble(ari.Root)
+		case cmd.Flip:     s.operateSingle(ari.Flip)
+		case cmd.Sin:      s.operateSingle(s.sin)
+		case cmd.Cos:      s.operateSingle(s.cos)
+		case cmd.Tan:      s.operateSingle(s.tan)
+		case cmd.Asin:     s.operateSingle(s.asin)
+		case cmd.Acos:     s.operateSingle(s.acos)
+		case cmd.Atan:     s.operateSingle(s.atan)
+		case cmd.Fact:     s.operateSingle(ari.FactW)
 	}
 
 	return
@@ -57,16 +57,12 @@ func (s *Stack) parseCommand(c cmd.Command) (err error) {
 
 // value... command... error? Deal with them all!
 
-func (s *Stack) Parse(input string) error {
+func (s *Stack) Parse(input string) {
 	for _, atom := range strings.Fields(input) {
 		if v, e := parseValue(atom); e == nil {
 			s.push(v)
 		} else if c, e := cmd.NewCommand(atom); e == nil {
 			s.parseCommand(c)
-		} else {
-			return e
 		}
 	}
-
-	return nil
 }
