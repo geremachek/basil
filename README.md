@@ -2,7 +2,7 @@
 
 An RPN calculator with a simple terminal interface
 
-![Basil](images/tiny.png)
+![Basil](images/9.png)
 
 **Commands:**
 
