@@ -6,19 +6,19 @@ import (
 )
 
 type lineBuff struct {
-	buffer string
+	buffer []rune
 	
 	locX int
 	locY int
 }
 
 func newLineBuff(x, y int) *lineBuff {
-	return &lineBuff { "", x, y }
+	return &lineBuff { nil, x, y }
 }
 
 
 func (lb lineBuff) text() string {
-	return lb.buffer
+	return string(lb.buffer)
 }
 
 // show our cursor
@@ -30,7 +30,7 @@ func (lb lineBuff) showPos(s tcell.Screen) {
 // add a char...
 
 func (lb *lineBuff) push(s tcell.Screen, ch rune) {
-	lb.buffer += string(ch)
+	lb.buffer = append(lb.buffer, ch)
 	s.SetContent(lb.locX, lb.locY, ch, []rune(""), tcell.StyleDefault)
 
 	// move and show the cursor
@@ -43,7 +43,7 @@ func (lb *lineBuff) push(s tcell.Screen, ch rune) {
 
 func (lb *lineBuff) delete(s tcell.Screen) {
 	if l := len(lb.buffer); l > 0 { // buffer is not empty
-		lb.buffer = lb.buffer[:l-1] // remove the char
+		lb.buffer = lb.buffer[:l-1]
 		lb.locX-- // move curs back
 
 		// erase it from the screen
@@ -63,7 +63,7 @@ func (lb *lineBuff) refresh(s tcell.Screen) {
 	// reset and show the cursor
 
 	lb.locX = 0
-	lb.buffer = ""
+	lb.buffer = nil
 	
 	lb.showPos(s)
 }

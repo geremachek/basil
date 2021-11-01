@@ -21,7 +21,7 @@ func parseValue(v string) (float64, error) {
 
 // parse commands...
 
-func (s *Stack) parseCommand(c cmd.Command) (err error) {
+func (s *Stack) parseCommand(c cmd.Command) {
 	switch c {
 		case cmd.Pop:      s.pop()
 		case cmd.Swap:     s.swap()
@@ -51,8 +51,6 @@ func (s *Stack) parseCommand(c cmd.Command) (err error) {
 		case cmd.Atan:     s.operateSingle(s.atan)
 		case cmd.Fact:     s.operateSingle(ari.FactW)
 	}
-
-	return
 }
 
 // value... command... error? Deal with them all!
