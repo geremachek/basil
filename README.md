@@ -24,7 +24,7 @@ cube
 sqrt
 log
 ln
-logx
+logb
 root
 flip
 sin
