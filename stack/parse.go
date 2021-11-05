@@ -40,7 +40,7 @@ func (s *Stack) parseCommand(c cmd.Command) {
 		case cmd.Sqrt:     s.operateSingle(math.Sqrt)
 		case cmd.Log:      s.operateSingle(math.Log10)
 		case cmd.Ln:       s.operateSingle(math.Log)
-		case cmd.Logx:     s.operateDouble(ari.Logx)
+		case cmd.Logb:     s.operateDouble(ari.Logb)
 		case cmd.Root:     s.operateDouble(ari.Root)
 		case cmd.Flip:     s.operateSingle(ari.Flip)
 		case cmd.Sin:      s.operateSingle(s.sin)

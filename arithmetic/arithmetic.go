@@ -22,7 +22,7 @@ func Divide   (a, b float64) float64 {
 
 func Square   (v float64) float64    { return math.Pow(v, 2) }
 func Cube     (v float64) float64    { return math.Pow(v, 3) }
-func Logx     (a, b float64) float64 { return math.Log10(b) / math.Log10(a) }
+func Logb     (a, b float64) float64 { return math.Log10(b) / math.Log10(a) }
 func Root     (a, b float64) float64 { return math.Pow(b, 1 / a) }
 func Flip     (v float64) float64    { return -v }
 
