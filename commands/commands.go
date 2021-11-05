@@ -23,7 +23,7 @@ const (
 	Sqrt
 	Log
 	Ln
-	Logx
+	Logb
 	Root
 	Flip
 	Sin
@@ -56,7 +56,7 @@ func NewCommand(s string) (Command, error) {
 		case "sqrt":             return Sqrt, nil
 		case "log":              return Log, nil
 		case "ln":               return Ln, nil
-		case "logx":             return Logx, nil
+		case "logb":             return Logb, nil
 		case "root":             return Root, nil
 		case "flip":             return Flip, nil
 		case "sin":              return Sin, nil
