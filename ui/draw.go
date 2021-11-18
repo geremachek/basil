@@ -12,7 +12,7 @@ func addstr(s tcell.Screen, style tcell.Style, x int, y int, text string) {
 	arr := []rune(text)
 
 	for i := x; i < len(arr)+x; i++ {
-		s.SetContent(i, y, arr[i-x], []rune(""), style)
+ 		s.SetContent(i, y, arr[i-x], []rune{}, style)
 	}
 }
 
