@@ -9,10 +9,11 @@ import (
 // draw text to the screen
 
 func addstr(s tcell.Screen, style tcell.Style, x int, y int, text string) {
-	arr := []rune(text)
+	curs := x
 
-	for i := x; i < len(arr)+x; i++ {
- 		s.SetContent(i, y, arr[i-x], []rune{}, style)
+	for _, ch := range text {
+		s.SetContent(curs, y, ch, []rune{}, style)
+		curs++
 	}
 }
 
