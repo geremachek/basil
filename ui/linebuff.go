@@ -31,7 +31,7 @@ func (lb lineBuff) showPos(s tcell.Screen) {
 
 func (lb *lineBuff) push(s tcell.Screen, ch rune) {
 	lb.buffer = append(lb.buffer, ch)
-	s.SetContent(lb.locX, lb.locY, ch, []rune(""), tcell.StyleDefault)
+	lb.drawChar(s, ch)
 
 	// move and show the cursor
 
@@ -48,7 +48,7 @@ func (lb *lineBuff) delete(s tcell.Screen) {
 
 		// erase it from the screen
 
-		s.SetContent(lb.locX, lb.locY, ' ', []rune(""), tcell.StyleDefault)
+		lb.drawChar(s, ' ')
 		lb.showPos(s)
 	}
 }
@@ -58,7 +58,7 @@ func (lb *lineBuff) delete(s tcell.Screen) {
 func (lb *lineBuff) refresh(s tcell.Screen) {
 	// clear the line
 
-	addstr(s, tcell.StyleDefault, 0, lb.locY, strings.Repeat(" ", len(lb.buffer)))
+	addString(s, tcell.StyleDefault, 0, lb.locY, strings.Repeat(" ", len(lb.buffer)))
 
 	// reset and show the cursor
 
@@ -66,4 +66,10 @@ func (lb *lineBuff) refresh(s tcell.Screen) {
 	lb.buffer = nil
 	
 	lb.showPos(s)
+}
+
+// draw a character at the current cursor position 
+
+func (lb lineBuff) drawChar(s tcell.Screen, ch rune) {
+	s.SetContent(lb.locX, lb.locY, ch, []rune{}, tcell.StyleDefault)
 }

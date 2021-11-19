@@ -50,7 +50,7 @@ func (u *ui) drawStackWindow() {
 
 func (u *ui) clearStackWindow(lines int) {
 	for y := u.height-1; y >= u.height-lines; y-- {
-		addstr(u.scr, tcell.StyleDefault, 0, y, u.clearLine)
+		addString(u.scr, tcell.StyleDefault, 0, y, u.clearLine)
 	}
 }
 
@@ -71,7 +71,7 @@ func (u ui) drawAngleMode() {
 // draw the barrier decoration...
 
 func (u ui) drawLine() {
-	addstr(u.scr, tcell.StyleDefault, 0, u.height, strings.Repeat(bar, u.width))
+	addString(u.scr, tcell.StyleDefault, 0, u.height, strings.Repeat(bar, u.width))
 }
 
 // match keys with actions

@@ -8,7 +8,7 @@ import (
 
 // draw text to the screen
 
-func addstr(s tcell.Screen, style tcell.Style, x int, y int, text string) {
+func addString(s tcell.Screen, style tcell.Style, x int, y int, text string) {
 	curs := x
 
 	for _, ch := range text {
@@ -28,5 +28,5 @@ func drawAligned(s tcell.Screen, x, y, width int, text string) {
 		disp = disp[:l - (l - width) - 3] + "..."
 	}
 
-	addstr(s, tcell.StyleDefault, x, y, fmt.Sprintf("%" + strconv.Itoa(width) + "s", disp))
+	addString(s, tcell.StyleDefault, x, y, fmt.Sprintf("%" + strconv.Itoa(width) + "s", disp))
 }
