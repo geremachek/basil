@@ -29,7 +29,7 @@ func NewUi(h, w int) (*ui, error) {
 	if s, err := tcell.NewScreen(); err == nil {
 		return &ui { stack.NewStack(), newLineBuff(0, h+2), s, h, w, strings.Repeat(" ", w), true }, nil
 	} else {
-		return &ui{}, err
+		return nil, err
 	}
 }
 
